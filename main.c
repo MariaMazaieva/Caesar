@@ -54,20 +54,35 @@ void shift(char* arr_first, char * arr_second, int offset, char* letters[]) { //
 
     for (int j = 0; j < Alphabet; j++) {
         for (int i = 0; i < 10; i++) {//////dont forget
-            int posun = (j + (arr_first[i] - 'a'));//%52
-            tamp = letters[posun];
-            // printf("arr i %c\n", arr_first[i]);
-            // printf("tamp = %c", tamp);
+            // int posun = (j + (arr_first[i] - 'a'));//%52
+            // tamp = letters[posun];
+            // printf("arr i %c is i %d, j is %d ", arr_first[i], i, j);
+            // printf("tamp=%c ", tamp);
+
+            if(arr_first[i] < 91 && j + arr_first[i] > 90) {
+                tamp = letters[j + arr_first[i] - 91];
+            }
+            else if (arr_first[i] < 91) {
+                tamp = letters[j + arr_first[i] - 39];
+            }
+            else {
+                int new_letter = j + (arr_first[i] - 'a');
+                tamp = letters[new_letter];
+            }
             if(tamp == arr_second[i]) {
                 counter ++;
             }
+            // printf("arr i %c is i %d, j is %d ", arr_first[i], i, j);
+            // printf("tamp=%c ", tamp);
+            // printf("counter=%d\n", counter);
 
         }
-        if (counter > max_same) {
+        if (counter >= max_same) {
             offset = j;
             max_same = counter;
-            counter = 0;
         }
+        counter = 0;
+        printf("\n");
     }
     rotate(arr_first, offset, letters);///////////////////////////////////////
     printf("max_same %d\n", max_same);
@@ -76,6 +91,7 @@ void shift(char* arr_first, char * arr_second, int offset, char* letters[]) { //
 
 char rotate(char original[], int offset, char* letters[]) {
     char tamp;
+    offset = 6;
     for(int i = 0; i < 10; i++) {
         if(original[i] < 91 && offset + original[i] > 90) {
             tamp = letters[offset + original[i] - 91];
